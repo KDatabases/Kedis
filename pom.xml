@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>Super</artifactId>
+        <groupId>com.sxtanna.database</groupId>
+        <version>pre-0.1</version>
+        <relativePath>../Super/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>Kedis</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <versionJedis>2.9.0</versionJedis>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.sxtanna.database</groupId>
+            <artifactId>Core</artifactId>
+            <version>LATEST</version>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${versionJedis}</version>
+        </dependency>
+    </dependencies>
+
+
+</project>
