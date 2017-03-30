@@ -1,12 +1,16 @@
 package com.sxtanna.database
 
+import com.sxtanna.database.base.Database
+import com.sxtanna.database.config.DatabaseConfig
+import com.sxtanna.database.config.DatabaseConfigManager
 import com.sxtanna.database.config.KedisConfig
 import com.sxtanna.database.task.KedisTask
 import redis.clients.jedis.Jedis
 import redis.clients.jedis.JedisPool
 import redis.clients.jedis.JedisPoolConfig
+import java.io.File
 
-class Kedis(override val config : KedisConfig) : Database<Jedis, KedisConfig>() {
+class Kedis(override val config : KedisConfig) : Database<Jedis, KedisConfig, KedisTask>() {
 
 	override val name : String = "Kedis"
 	lateinit var pool : JedisPool
@@ -20,7 +24,7 @@ class Kedis(override val config : KedisConfig) : Database<Jedis, KedisConfig>() 
 			testOnBorrow = true
 		}
 
-		pool = JedisPool(jedisConfig, config.user.address, config.user.port, config.pool.timeout, config.user.auth)
+		pool = JedisPool(jedisConfig, config.server.address, config.server.port, config.pool.timeout, config.user.auth)
 	}
 
 	override fun poison() {
@@ -28,8 +32,19 @@ class Kedis(override val config : KedisConfig) : Database<Jedis, KedisConfig>() 
 	}
 
 
-	override fun poolResource() : Jedis? = pool.resource
+	override fun poolResource() : Jedis? = pool.resource?.apply { select(config.user.defaultDB) }
 
 	override fun createTask(resource : Jedis) : KedisTask = KedisTask(resource)
+
+
+	companion object : DatabaseConfigManager<KedisConfig, Kedis> {
+
+		override fun get(file : File) : Kedis = Kedis(getConfig(file))
+
+		override fun getConfig(file : File) : KedisConfig {
+			return DatabaseConfig.loadOrSave(file, KedisConfig.DEFAULT)
+		}
+
+	}
 
 }

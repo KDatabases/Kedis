@@ -5,7 +5,7 @@
     <parent>
         <artifactId>Super</artifactId>
         <groupId>com.sxtanna.database</groupId>
-        <version>pre-0.1</version>
+        <version>1.0</version>
         <relativePath>../Super/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -14,9 +14,14 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <properties>
-        <versionJedis>2.9.0</versionJedis>
-    </properties>
+    <name>${project.artifactId}</name>
+    <description>Redis Kotlin wrapper based on Jedis</description>
+    <url>https://github.com/KDatabases/Kedis</url>
+
+    <scm>
+        <url>git://github.com/KDatabases/Kedis.git</url>
+        <connection>scm:git:git://github.com/KDatabases/Kedis.git</connection>
+    </scm>
 
     <dependencies>
         <dependency>
