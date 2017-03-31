@@ -1,5 +1,6 @@
-package com.sxtanna.database
+package com.sxtanna.tests
 
+import com.sxtanna.database.Kedis
 import java.io.File
 import kotlin.system.measureTimeMillis
 

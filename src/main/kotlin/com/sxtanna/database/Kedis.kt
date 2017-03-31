@@ -39,8 +39,10 @@ class Kedis(override val config : KedisConfig) : Database<Jedis, KedisConfig, Ke
 
 	companion object : DatabaseConfigManager<KedisConfig, Kedis> {
 
+		@JvmStatic
 		override fun get(file : File) : Kedis = Kedis(getConfig(file))
 
+		@JvmStatic
 		override fun getConfig(file : File) : KedisConfig {
 			return DatabaseConfig.loadOrSave(file, KedisConfig.DEFAULT)
 		}
