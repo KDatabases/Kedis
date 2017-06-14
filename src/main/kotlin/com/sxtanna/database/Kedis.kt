@@ -1,9 +1,9 @@
 package com.sxtanna.database
 
 import com.sxtanna.database.base.Database
-import com.sxtanna.database.config.DatabaseConfig
 import com.sxtanna.database.config.DatabaseConfigManager
 import com.sxtanna.database.config.KedisConfig
+import com.sxtanna.database.ext.loadOrSave
 import com.sxtanna.database.task.KedisTask
 import redis.clients.jedis.Jedis
 import redis.clients.jedis.JedisPool
@@ -27,9 +27,7 @@ class Kedis(override val config : KedisConfig) : Database<Jedis, KedisConfig, Ke
 		pool = JedisPool(jedisConfig, config.server.address, config.server.port, config.pool.timeout, config.user.auth)
 	}
 
-	override fun poison() {
-		pool.destroy()
-	}
+	override fun poison() = pool.destroy()
 
 
 	override fun poolResource() : Jedis? = pool.resource?.apply { select(config.user.defaultDB) }
@@ -40,12 +38,10 @@ class Kedis(override val config : KedisConfig) : Database<Jedis, KedisConfig, Ke
 	companion object : DatabaseConfigManager<KedisConfig, Kedis> {
 
 		@JvmStatic
-		override fun get(file : File) : Kedis = Kedis(getConfig(file))
+		override fun get(file : File) = Kedis(getConfig(file))
 
 		@JvmStatic
-		override fun getConfig(file : File) : KedisConfig {
-			return DatabaseConfig.loadOrSave(file, KedisConfig.DEFAULT)
-		}
+		override fun getConfig(file : File) = file.loadOrSave(KedisConfig.DEFAULT)
 
 	}
 

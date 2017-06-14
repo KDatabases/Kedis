@@ -16,13 +16,16 @@ class KedisTests(file : File) {
 
 	fun runTest() = kedis {
 		set("Hello", "World")
+		setHash("users", "Hello", "World")
+
+		println("Value ${get("Hello")}")
+		println("Hash Value ${getHash("users", "Hello")}")
 	}
 
 }
 
 fun main(args : Array<String>) {
-	val rootFolder = File("").absoluteFile
-	val test = KedisTests(File(rootFolder, "Config.json"))
+	val test = KedisTests(File("RedisConfig.json"))
 
 	val entireTestTime = measureTimeMillis {
 		println("Enable took ${measureTimeMillis {
