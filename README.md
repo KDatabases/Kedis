@@ -2,12 +2,19 @@
 Redis Kotlin wrapper based on Jedis
 
 ## How to get it!
+
+### Maven
 ```xml
 <dependency>
     <groupId>com.sxtanna.database</groupId>
     <artifactId>Kedis</artifactId>
     <version>LATEST</version>
 </dependency>
+```
+
+### Gradle
+```groovy
+compile "com.sxtanna.database:Kedis:+"
 ```
 
 ## How it works!
