@@ -41,6 +41,9 @@ class Kedis(override val conf : KedisConfig) : Database<Jedis, KedisConfig, Kedi
 		override fun get(file : File) = Kedis(getConfig(file))
 
 		@JvmStatic
+		override fun get(config: KedisConfig) = Kedis(config)
+
+		@JvmStatic
 		override fun getConfig(file : File) = file.loadOrSave(KedisConfig.DEFAULT)
 
 	}
